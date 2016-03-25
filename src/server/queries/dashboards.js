@@ -52,7 +52,7 @@ module.exports = {
     // e.g. {dashboards_id: 1234, isNewDashboard: true}
 
     // call getOne to see if dashboard already exists
-    module.exports.getOne(orgName, repoName, function (err, dashboardObject) {
+    this.getOne(orgName, repoName, function (err, dashboardObject) {
       if (err) {
         callback(err, null);
       } else if (dashboardObject) {
