@@ -9,44 +9,24 @@ var dashboards = module.exports = promise.promisifyAll({
 
   getOne: function (orgName, repoName, callback) {
     // return dashboard object (with all fields) or null if none
-    pool.getConnection(function (err, connection) {
-      if (err) {
-        throw new Error(err);
-      }
-      var selectStr = "SELECT * FROM dashboards WHERE org_name='" + orgName + "' AND repo_name='" + repoName + "';";
-      connection.query(selectStr, function (err, results) {
-        var dashboardObject = (results && results.length > 0) ? results[0] : null;
-        callback(err, dashboardObject);
-        connection.release();
-      });
+    var selectStr = "SELECT * FROM dashboards WHERE org_name='" + orgName + "' AND repo_name='" + repoName + "';";
+    pool.query(selectStr, function (err, results) {
+      var dashboardObject = (results && results.length > 0) ? results[0] : null;
+      callback(err, dashboardObject);
     });
   },
   getAllByGithubId: function (githubId, callback) {
     // return an array of all dashboard objects (with all fields) associated with github_id
-    pool.getConnection(function (err, connection) {
-      if (err) {
-        throw new Error(err);
-      }
-      var selectStr = "SELECT dashboards.id, org_name, repo_name, branch_name, last_commit_sha1, last_commit_msg FROM users_dashboards INNER JOIN dashboards ON users_dashboards.dashboards_id=dashboards.id WHERE users_github_id='" + githubId + "';";
-      connection.query(selectStr, function (err, results) {
-        callback(err, results);
-        connection.release();
-      });
+    var selectStr = "SELECT dashboards.id, org_name, repo_name, branch_name, last_commit_sha1, last_commit_msg FROM users_dashboards INNER JOIN dashboards ON users_dashboards.dashboards_id=dashboards.id WHERE users_github_id= " + githubId + ";";
+    pool.query(selectStr, function (err, results) {
+      callback(err, results);
     });
   },
   updateLastCommit: function (orgName, repoName, newSha1, newMsg, callback) {
     // no return value
-    pool.getConnection(function (err, connection) {
-      if (err) {
-        throw new Error(err);
-      }
-      var updateStr = "UPDATE dashboards SET last_commit_sha1='" + newSha1 + "', last_commit_msg='" + newMsg + "' WHERE org_name='" + orgName + "' AND repo_name='" + repoName + "';";
-      connection.query(updateStr, function (err, results) {
-        if (callback) {
-          callback(err, results);
-        }
-        connection.release();
-      });
+    var updateStr = "UPDATE dashboards SET last_commit_sha1='" + newSha1 + "', last_commit_msg='" + newMsg + "' WHERE org_name='" + orgName + "' AND repo_name='" + repoName + "';";
+    pool.query(updateStr, function (err, results) {
+      callback(err, results);
     });
   },
   findOrCreate: function (orgName, repoName, callback) {
