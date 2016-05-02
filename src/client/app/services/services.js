@@ -3,7 +3,7 @@ var helper = angular.module("helper", []);
 
 // all GET/POST requests will return res.data in a promise
 // DELETE request does not return anything
-helper.factory('RequestFactory', function($http, $location) {
+helper.factory('RequestFactory', ['$http', '$location', function ($http, $location) {
   var getRepos = function(callback){
     $http({
       method: 'GET',
@@ -96,9 +96,9 @@ helper.factory('RequestFactory', function($http, $location) {
     getRepos: getRepos,
     getPage: getPage
   };
-});
+}]);
 
-helper.factory('AuthFactory', function($cookies, $http, $location) {
+helper.factory('AuthFactory', ['$cookies', '$http', '$location', function ($cookies, $http, $location) {
   var authRoutes = ['/', '/add', '/:orgName/:repoName', '/:orgName/:repoName/setup', '/about'];
 
   var isAuth = function () {
@@ -126,7 +126,7 @@ helper.factory('AuthFactory', function($cookies, $http, $location) {
     eatCookies: eatCookies,
     logout: logout
   };
-});
+}]);
 
 helper.factory('Socket', ['socketFactory', function (socketFactory) {
   return socketFactory();

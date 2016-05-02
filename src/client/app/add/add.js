@@ -1,6 +1,6 @@
 "use strict";
 angular.module('add', [])
-.controller('AddController', ['$scope', 'RequestFactory', '$http', 'Socket', '$location', '$timeout', '$cookies',function($scope, RequestFactory, $http, Socket, $location, $timeout, $cookies){
+.controller('AddController', ['$scope', 'RequestFactory', '$http', 'Socket', '$location', '$timeout', '$cookies', function ($scope, RequestFactory, $http, Socket, $location, $timeout, $cookies) {
   $scope.subsc = [];
   $scope.loading = true;
   var linked = [];

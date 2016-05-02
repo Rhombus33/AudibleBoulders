@@ -1,6 +1,6 @@
 "use strict";
 angular.module('dashboard', [])
-.controller('DashboardController', function ($scope, $routeParams, RequestFactory, Socket, $cookies) {
+.controller('DashboardController', ['$scope', '$routeParams', 'RequestFactory', 'Socket', '$cookies', function ($scope, $routeParams, RequestFactory, Socket, $cookies) {
   $scope.orgName = $routeParams.orgName;
   $scope.repoName = $routeParams.repoName;
   $scope.repoLink = 'https://github.com/' + $routeParams.orgName + '/' + $routeParams.repoName;
@@ -45,7 +45,7 @@ angular.module('dashboard', [])
   // ];
 
   var parseConflicts = function () {
-    $scope.conflicts = [];  
+    $scope.conflicts = [];
     var fileMap = {};
     // example fileMap
     // ===============
@@ -180,4 +180,4 @@ angular.module('dashboard', [])
   };
 
   $scope.getDashboard();
-});
+}]);
