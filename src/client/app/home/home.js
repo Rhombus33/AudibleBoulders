@@ -1,6 +1,6 @@
 "use strict";
 angular.module('home', [])
-.controller('HomeController', function($scope, RequestFactory, AuthFactory, $cookies, Socket){
+.controller('HomeController', ['$scope', 'RequestFactory', 'AuthFactory', '$cookies', 'Socket', function ($scope, RequestFactory, AuthFactory, $cookies, Socket) {
   $scope.empty = false;
   $scope.loading = true;
   var githubId = $cookies.get('githubId');
@@ -34,4 +34,4 @@ angular.module('home', [])
   };
 
   initializeDashboardList();
-});
+}]);
